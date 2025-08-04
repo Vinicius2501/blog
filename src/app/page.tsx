@@ -42,7 +42,7 @@ export default async function Home() {
             03/08/2025 22:53
           </time>
           <PostHeading url='#' as='h1'>
-            Primiero Post
+            Primeiro Post
           </PostHeading>
 
           <p>

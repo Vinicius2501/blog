@@ -4,7 +4,7 @@ export type PostModel = {
   slug: string;
   excerpt: string;
   contate: string;
-  coverImageUrk: string;
+  coverImageUrl: string;
   publicshed: boolean;
   createdAt: string;
   updatedAt: string;
