@@ -1,4 +1,5 @@
 import { Container } from '@/components/Container';
+import { Header } from '@/components/Header';
 import { PostList } from '@/components/PostsList';
 import { SpinLoader } from '@/components/SpinLoader';
 import clsx from 'clsx';
@@ -7,9 +8,7 @@ import { Suspense } from 'react';
 export default async function Home() {
   return (
     <Container>
-      <header className={clsx('text-6xl', 'font-bold', 'text-center', 'py-8')}>
-        Header
-      </header>
+      <Header>Entre Commits e Café</Header>
       <p className={clsx('text-justify')}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
         distinctio rem voluptatibus vel nihil repudiandae laudantium in
