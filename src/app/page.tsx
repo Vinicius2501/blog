@@ -1,11 +1,11 @@
 import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
+import { PostCoverImage } from '@/components/PostCoverImage';
 import { PostHeading } from '@/components/PostHeading';
 import { PostList } from '@/components/PostsList';
 import { SpinLoader } from '@/components/SpinLoader';
 import clsx from 'clsx';
-import Image from 'next/image';
-import Link from 'next/link';
+
 import { Suspense } from 'react';
 
 export default async function Home() {
@@ -22,26 +22,17 @@ export default async function Home() {
           'sm:grid-cols-2',
         )}
       >
-        <Link
-          href='#'
-          className={clsx('h-full', 'w-full', 'overflow-hidden', 'rounded-2xl')}
-        >
-          <Image
-            src='/images/bryen_0.png'
-            width={1200}
-            height={720}
-            alt='Títulio do post'
-            className={clsx(
-              'object-cover',
-              'object-center',
-              'group-hover:scale-105',
-              'transition',
-              'h-full',
-              'w-full',
-            )}
-            priority
-          />
-        </Link>
+        <PostCoverImage
+          linkProps={{ href: '#' }}
+          imageProps={{
+            src: '/images/bryen_0.png',
+            width: 1200,
+            height: 720,
+            alt: 'Títulio do post',
+            priority: true,
+          }}
+        />
+
         <div className={clsx('flex', 'flex-col', 'gap-4', 'sm:justify-center')}>
           <time
             className={clsx('text-slate-600', 'text-sm/tight', 'block')}
