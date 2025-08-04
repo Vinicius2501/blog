@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 
 type HeaderProps = {
   children: React.ReactNode;
@@ -19,9 +20,9 @@ export function Header({ children }: HeaderProps) {
         'lg:py-12',
       )}
     >
-      <a href='#' className={clsx('')}>
+      <Link href='#' className={clsx('')}>
         {children}
-      </a>
+      </Link>
     </header>
   );
 }
