@@ -1,5 +1,6 @@
 import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
+import { PostHeading } from '@/components/PostHeading';
 import { PostList } from '@/components/PostsList';
 import { SpinLoader } from '@/components/SpinLoader';
 import clsx from 'clsx';
@@ -49,10 +50,10 @@ export default async function Home() {
             {' '}
             03/08/2025 22:53
           </time>
+          <PostHeading url='#' as='h1'>
+            Primiero Post
+          </PostHeading>
 
-          <h1 className={clsx('text-2xl/tight', 'font-bold', 'sm:text-4xl')}>
-            <Link href='#'> Título temporário</Link>
-          </h1>
           <p>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi
             suscipit est sed aliquam veritatis consectetur, exercitationem
