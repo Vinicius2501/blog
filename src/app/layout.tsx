@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'The Blog',
-  description: 'Descrição da página',
+  title: 'Entre Commits e Café',
+  description:
+    'Dicas, reflexões e aprendizados sobre desenvolvimento de software, produtividade e rotina dev — tudo entre um commit e outro gole de café.',
 };
 
 export default function RootLayout({
