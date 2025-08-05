@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { PostHeading } from '../PostHeading';
 import { PostDate } from '../PostDate';
 import clsx from 'clsx';
+import { SafeMarkdown } from '../SafeMarkdown';
 
 type SinglePostProps = {
   slug: string;
@@ -28,7 +29,7 @@ export async function SinglePost({ slug }: SinglePostProps) {
         </p>
       </header>
       <p className={clsx('text-xl', 'mb-8')}>{post.excerpt}</p>
-      <div>{post.content}</div>
+      <SafeMarkdown markdown={post.content}></SafeMarkdown>
     </article>
   );
 }
