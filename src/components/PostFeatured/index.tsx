@@ -1,9 +1,13 @@
 import clsx from 'clsx';
 import { PostHeading } from '../PostHeading';
 import { PostCoverImage } from '../PostCoverImage';
+import { findeAllPublicPosts } from '@/lib/post/queries';
 
-export function PostFeatured() {
-  const postUrl = `/post/asdasdasd`;
+export async function PostFeatured() {
+  const posts = await findeAllPublicPosts();
+  const mainPost = posts[0];
+
+  const postUrl = `/post/${mainPost.slug}`;
   return (
     <section
       className={clsx(
@@ -18,10 +22,10 @@ export function PostFeatured() {
       <PostCoverImage
         linkProps={{ href: postUrl }}
         imageProps={{
-          src: '/images/bryen_0.png',
+          src: mainPost.coverImageUrl,
           width: 1200,
           height: 720,
-          alt: 'Títulio do post',
+          alt: mainPost.title,
           priority: true,
         }}
       />
@@ -35,15 +39,10 @@ export function PostFeatured() {
           03/08/2025 22:53
         </time>
         <PostHeading url={postUrl} as='h1'>
-          Primeiro Post
+          {mainPost.title}
         </PostHeading>
 
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi
-          suscipit est sed aliquam veritatis consectetur, exercitationem
-          dignissimos adipisci. Nesciunt voluptate saepe doloremque eveniet
-          beatae dicta. Voluptas natus hic amet quisquam.
-        </p>
+        <p>{mainPost.excerpt}</p>
       </div>
     </section>
   );
