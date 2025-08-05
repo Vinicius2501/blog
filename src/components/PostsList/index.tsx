@@ -2,6 +2,7 @@ import { postRepository } from '@/repositories/post';
 import { PostCoverImage } from '../PostCoverImage';
 import clsx from 'clsx';
 import { PostHeading } from '../PostHeading';
+import { formatDateTime, relativeDate } from '@/utils/format-datetime';
 
 export async function PostList() {
   const posts = await postRepository.findAll();
@@ -16,13 +17,14 @@ export async function PostList() {
       )}
     >
       {posts.map(post => {
+        const postUrl = `/post/${post.slug}`;
         return (
           <div
             key={post.id}
             className={clsx('flex', 'flex-col', 'group', 'gap-4')}
           >
             <PostCoverImage
-              linkProps={{ href: `/post/${post.slug}` }}
+              linkProps={{ href: postUrl }}
               imageProps={{
                 src: post.coverImageUrl,
                 width: 1200,
@@ -36,11 +38,12 @@ export async function PostList() {
               <time
                 className={clsx('text-slate-600', 'text-sm/tight', 'block')}
                 dateTime={post.createdAt}
+                title={formatDateTime(post.createdAt)}
               >
                 {' '}
-                03/08/2025 22:53
+                {relativeDate(post.createdAt)}
               </time>
-              <PostHeading url='#' as='h1'>
+              <PostHeading url={postUrl} as='h1'>
                 {post.title}
               </PostHeading>
 
