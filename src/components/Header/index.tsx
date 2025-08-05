@@ -20,7 +20,7 @@ export function Header({ children }: HeaderProps) {
         'lg:py-12',
       )}
     >
-      <Link href='#' className={clsx('')}>
+      <Link href='/' className={clsx('')}>
         {children}
       </Link>
     </header>
