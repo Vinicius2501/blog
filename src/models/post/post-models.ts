@@ -3,7 +3,7 @@ export type PostModel = {
   title: string;
   slug: string;
   excerpt: string;
-  contate: string;
+  content: string;
   coverImageUrl: string;
   published: boolean;
   createdAt: string;
