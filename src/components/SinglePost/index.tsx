@@ -1,4 +1,7 @@
 import { findPostBySlugCached } from '@/lib/post/queries';
+import Image from 'next/image';
+import { PostHeading } from '../PostHeading';
+import { PostDate } from '../PostDate';
 import clsx from 'clsx';
 
 type SinglePostProps = {
@@ -8,5 +11,24 @@ type SinglePostProps = {
 export async function SinglePost({ slug }: SinglePostProps) {
   const post = await findPostBySlugCached(slug);
 
-  return <p className={clsx()}>{post.content}</p>;
+  return (
+    <article className={clsx('mb-8')}>
+      <header className={clsx('group', 'flex', 'flex-col', 'gap-4', 'mb-4')}>
+        <Image
+          src={post.coverImageUrl}
+          width={1200}
+          height={720}
+          alt={post.title}
+          className={clsx('rounded-2xl')}
+        />
+        <PostHeading url={`/post/${post.slug}`}>{post.title}</PostHeading>
+
+        <p>
+          {post.author} | <PostDate createdAt={post.createdAt} />
+        </p>
+      </header>
+      <p className={clsx('text-xl', 'mb-8')}>{post.excerpt}</p>
+      <div>{post.content}</div>
+    </article>
+  );
 }
