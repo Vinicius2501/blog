@@ -1,8 +1,7 @@
 import { postRepository } from '@/repositories/post';
 import { PostCoverImage } from '../PostCoverImage';
 import clsx from 'clsx';
-import { PostHeading } from '../PostHeading';
-import { formatDateTime, relativeDate } from '@/utils/format-datetime';
+import { PostSumary } from '../PostSumary';
 
 export async function PostList() {
   const posts = await postRepository.findAll();
@@ -32,28 +31,14 @@ export async function PostList() {
                 alt: post.title,
               }}
             />
-            <div
-              className={clsx('flex', 'flex-col', 'gap-4', 'sm:justify-center')}
-            >
-              <time
-                className={clsx('text-slate-600', 'text-sm/tight', 'block')}
-                dateTime={post.createdAt}
-                title={formatDateTime(post.createdAt)}
-              >
-                {' '}
-                {relativeDate(post.createdAt)}
-              </time>
-              <PostHeading url={postUrl} as='h1'>
-                {post.title}
-              </PostHeading>
 
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi
-                suscipit est sed aliquam veritatis consectetur, exercitationem
-                dignissimos adipisci. Nesciunt voluptate saepe doloremque
-                eveniet beatae dicta. Voluptas natus hic amet quisquam.
-              </p>
-            </div>
+            <PostSumary
+              postUrl={postUrl}
+              postHeading='h2'
+              createdAt={post.createdAt}
+              title={post.title}
+              excerpt={post.excerpt}
+            ></PostSumary>
           </div>
         );
       })}
