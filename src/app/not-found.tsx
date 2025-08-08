@@ -1,27 +1,16 @@
-import clsx from 'clsx';
+import { ErrorMessage } from '@/components/ErrorMessage';
 
 export default function NotFoundPage() {
   return (
-    <div
-      className={clsx(
-        'min-h-[320px]',
-        'flex',
-        'bg-slate-200',
-        'text-slate-800',
-        'mb-16',
-        'rounded-xl',
-        'items-center',
-        'justify-center',
-        'text-center',
-      )}
-    >
-      <div className={clsx('px-8')}>
-        <h1 className={clsx('text-3xl/tight', 'pb-8', 'sm:text-5xl/tight')}>
-          404 - Not found
-        </h1>
-        <p>Parece que você digitou algo que nem o Git reconheceria.</p>
-        <p>Que tal voltar pro último commit estável? </p>
-      </div>
-    </div>
+    <ErrorMessage
+      pageTitle='404 - Página não encontrada'
+      contentTitle='404 - Not found'
+      content={
+        <div>
+          Parece que você digitou algo que nem o Git reconheceria.<br></br>
+          Que tal voltar pro útlimo commit estável?
+        </div>
+      }
+    />
   );
 }
