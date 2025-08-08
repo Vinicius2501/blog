@@ -1,3 +1,4 @@
+'user client';
 import clsx from 'clsx';
 
 type ErroMessageProps = {
