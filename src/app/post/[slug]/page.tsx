@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
+export const dynamic = 'force-static';
+
 type PostSlugProps = {
   params: Promise<{ slug: string }>;
 };
