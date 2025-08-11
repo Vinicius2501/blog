@@ -1,0 +1,33 @@
+import { SinglePost } from '@/components/SinglePost';
+import { SpinLoader } from '@/components/SpinLoader';
+import { findPostBySlugCached } from '@/lib/post/queries/public';
+import clsx from 'clsx';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
+
+type PostSlugProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PostSlugProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const post = await findPostBySlugCached(slug);
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+  };
+}
+
+export default async function PostPage({ params }: PostSlugProps) {
+  const { slug } = await params;
+
+  return (
+    <Suspense fallback={<SpinLoader className={clsx('min-h-20', 'mb-16')} />}>
+      <SinglePost slug={slug} />
+    </Suspense>
+  );
+}
