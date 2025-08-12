@@ -1,7 +1,8 @@
+import { deletePostAction } from '@/actions/post/delete-post-action';
 import { findAllPostsAdmin } from '@/lib/post/queries/admin';
 import clsx from 'clsx';
-import { Trash2Icon } from 'lucide-react';
 import Link from 'next/link';
+import { DeletePostButton } from '../admin/DeletePostButton';
 
 export async function PostsListsAdmin() {
   const posts = await findAllPostsAdmin();
@@ -30,21 +31,15 @@ export async function PostsListsAdmin() {
                 </span>
               )}
 
-              <button
-                className={clsx(
-                  'text-red-400',
-                  'cursor-pointer',
-                  'transition',
-                  '[&_svg]:w-4',
-                  '[&_svg]:h-4',
-                  'hover:scale-120',
-                  'hover:text-red-600',
-                )}
-                aria-label={`Apagar post: ${post.title}`}
-                title={`Apagar post: ${post.title}`}
-              >
-                <Trash2Icon />
-              </button>
+              <form action=''>
+                <input
+                  type='hidden'
+                  name='id'
+                  id={post.id}
+                  defaultValue={post.id}
+                />
+                <DeletePostButton post_id={post.id} post_title={post.title} />
+              </form>
             </div>
           );
         })}
