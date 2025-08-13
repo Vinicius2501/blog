@@ -1,8 +1,8 @@
-import { deletePostAction } from '@/actions/post/delete-post-action';
 import { findAllPostsAdmin } from '@/lib/post/queries/admin';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { DeletePostButton } from '../admin/DeletePostButton';
+import { Dialog } from '../Dialog';
 
 export async function PostsListsAdmin() {
   const posts = await findAllPostsAdmin();
@@ -31,15 +31,7 @@ export async function PostsListsAdmin() {
                 </span>
               )}
 
-              <form action=''>
-                <input
-                  type='hidden'
-                  name='id'
-                  id={post.id}
-                  defaultValue={post.id}
-                />
-                <DeletePostButton post_id={post.id} post_title={post.title} />
-              </form>
+              <DeletePostButton post_id={post.id} post_title={post.title} />
             </div>
           );
         })}
