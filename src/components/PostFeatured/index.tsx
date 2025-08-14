@@ -2,9 +2,20 @@ import clsx from 'clsx';
 import { PostHeading } from '../PostHeading';
 import { PostCoverImage } from '../PostCoverImage';
 import { findAllPublicPostsCached } from '@/lib/post/queries/public';
+import { ErrorMessage } from '../ErrorMessage';
 
 export async function PostFeatured() {
   const posts = await findAllPublicPostsCached();
+
+  if (posts.length <= 0)
+    return (
+      <ErrorMessage
+        pageTitle='Ops...'
+        contentTitle='Ops!'
+        content='Ainda não finalizamos o café então não temos nenhum post.'
+      />
+    );
+
   const mainPost = posts[0];
 
   const postUrl = `/post/${mainPost.slug}`;
