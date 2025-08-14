@@ -2,6 +2,7 @@
 
 import { deletePostAction } from '@/actions/post/delete-post-action';
 import { Dialog } from '@/components/Dialog';
+import { postRepository } from '@/repositories/post';
 import clsx from 'clsx';
 import { Trash2Icon } from 'lucide-react';
 import { useState, useTransition } from 'react';
@@ -25,9 +26,9 @@ export function DeletePostButton({
   function handleConfirm() {
     startTransition(async () => {
       const result = await deletePostAction(post_id);
-      //alert('Apagando post:' + result);
-      console.log(result);
       setShowDialog(false);
+
+      if (result.error) alert('Error: ' + result.error);
     });
   }
 

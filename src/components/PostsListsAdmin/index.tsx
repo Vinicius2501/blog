@@ -20,13 +20,14 @@ export async function PostsListsAdmin() {
                 'justify-between',
                 'py-2',
                 'px-2',
+                !post.published ? 'bg-slate-600' : '',
               )}
               key={post.id}
             >
               <Link href={`post/${post.id}`}>{post.title}</Link>
 
               {!post.published && (
-                <span className={clsx('text-xs', 'slate-600', 'italic')}>
+                <span className={clsx('text-xs', 'italic')}>
                   (Não publicado)
                 </span>
               )}
