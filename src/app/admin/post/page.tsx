@@ -1,4 +1,4 @@
-import { PostsListsAdmin } from '@/components/PostsListsAdmin';
+import { PostsListsAdmin } from '@/components/admin/PostsListsAdmin';
 import { SpinLoader } from '@/components/SpinLoader';
 import clsx from 'clsx';
 import { Metadata } from 'next';
