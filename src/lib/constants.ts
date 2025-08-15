@@ -1,1 +1,2 @@
 export const SIMULATE_WAIT_IN_MS = 300;
+export const IMAGEUPLOADER_MAX_SIZE = 921600;
