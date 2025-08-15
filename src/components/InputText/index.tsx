@@ -29,7 +29,7 @@ export function InputText({ labelText = '', ...props }: InputTextProps) {
           'disabled:text-slate-400',
           'disabled:placeholder-slate-400',
           'read-only:bg-slate-200',
-          'cursor-not-allowed',
+          'disabled:cursor-not-allowed',
           props.className,
         )}
         id={id}
