@@ -7,6 +7,7 @@ import { MarkdownEditor } from '@/components/MarkdownEditor';
 import clsx from 'clsx';
 import { CircleCheckIcon } from 'lucide-react';
 import { useState } from 'react';
+import { ImageUploader } from '../ImageUploader';
 
 export function ManagePostForm() {
   const [markdownValue, setMarkdownValue] = useState('Começe a *digitar*');
@@ -30,6 +31,7 @@ export function ManagePostForm() {
           value={markdownValue}
           setValue={setMarkdownValue}
         ></MarkdownEditor>
+        <ImageUploader />
       </div>
 
       <div
