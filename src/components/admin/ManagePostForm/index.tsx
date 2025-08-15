@@ -3,10 +3,14 @@
 import { Button } from '@/components/Button';
 import { InputCheckbox } from '@/components/InputCheckbox';
 import { InputText } from '@/components/InputText';
+import { MarkdownEditor } from '@/components/MarkdownEditor';
 import clsx from 'clsx';
 import { CircleCheckIcon } from 'lucide-react';
+import { useState } from 'react';
 
 export function ManagePostForm() {
+  const [markdownValue, setMarkdownValue] = useState('Começe a *digitar*');
+
   return (
     <form action=''>
       <div className={clsx('flex', 'flex-col', 'gap-6')}>
@@ -19,6 +23,13 @@ export function ManagePostForm() {
         />
 
         <InputCheckbox labelText='Checkbox Text' />
+        <MarkdownEditor
+          labeltext='Conteúdo'
+          disabled={false}
+          textAreaName='content'
+          value={markdownValue}
+          setValue={setMarkdownValue}
+        ></MarkdownEditor>
       </div>
 
       <div
