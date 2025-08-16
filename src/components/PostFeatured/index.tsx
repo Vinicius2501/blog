@@ -3,6 +3,7 @@ import { PostHeading } from '../PostHeading';
 import { PostCoverImage } from '../PostCoverImage';
 import { findAllPublicPostsCached } from '@/lib/post/queries/public';
 import { ErrorMessage } from '../ErrorMessage';
+import { relativeDate } from '@/utils/format-datetime';
 
 export async function PostFeatured() {
   const posts = await findAllPublicPostsCached();
@@ -47,7 +48,7 @@ export async function PostFeatured() {
           dateTime='2025-08-03'
         >
           {' '}
-          03/08/2025 22:53
+          {relativeDate(mainPost.createdAt)}
         </time>
         <PostHeading url={postUrl} as='h1'>
           {mainPost.title}

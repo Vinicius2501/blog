@@ -6,28 +6,40 @@ import { InputText } from '@/components/InputText';
 import { MarkdownEditor } from '@/components/MarkdownEditor';
 import clsx from 'clsx';
 import { CircleCheckIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { ImageUploader } from '../ImageUploader';
-import { PublicPost } from '@/DTO/post/dto';
+import { makePublicEmptyPost, PublicPost } from '@/DTO/post/dto';
+import { createPostAction } from '@/actions/post/create-post-action';
 
 type ManagePostFormProps = {
   publicPostDTO?: PublicPost;
 };
 
 export function ManagePostForm({ publicPostDTO }: ManagePostFormProps) {
-  const [markdownValue, setMarkdownValue] = useState(
-    publicPostDTO ? publicPostDTO.content : 'Começe a *digitar*',
+  const initialFormState = {
+    formState: makePublicEmptyPost(publicPostDTO),
+    errors: [],
+  };
+
+  const [state, setFormState, isPending] = useActionState(
+    createPostAction,
+    initialFormState,
   );
+  const { formState } = state;
+
+  const [markdownValue, setMarkdownValue] = useState(formState.content);
+
+  useEffect(() => {}, [state]);
 
   return (
-    <form action=''>
+    <form action={setFormState}>
       <div className={clsx('flex', 'flex-col', 'gap-6')}>
         <InputText
           labelText='ID'
           name='id'
           placeholder='ID do post'
           type='text'
-          defaultValue={publicPostDTO?.id || ''}
+          defaultValue={formState.id}
           readOnly
         />
         <InputText
@@ -35,14 +47,14 @@ export function ManagePostForm({ publicPostDTO }: ManagePostFormProps) {
           name='title'
           placeholder='Título do post'
           type='text'
-          defaultValue={publicPostDTO?.title || ''}
+          defaultValue={formState.title}
         />
         <InputText
           labelText='Slug'
           name='slug'
           placeholder='Slug do post'
           type='text'
-          defaultValue={publicPostDTO?.slug || ''}
+          defaultValue={formState.slug}
           readOnly
         />
         <InputText
@@ -50,7 +62,7 @@ export function ManagePostForm({ publicPostDTO }: ManagePostFormProps) {
           name='excerpt'
           placeholder='Resumo do post'
           type='text'
-          defaultValue={publicPostDTO?.excerpt || ''}
+          defaultValue={formState.excerpt}
         />
 
         <ImageUploader />
@@ -59,7 +71,7 @@ export function ManagePostForm({ publicPostDTO }: ManagePostFormProps) {
           labelText='URL da capa'
           name='coverImageUrl'
           placeholder='URL da imagem da capa'
-          defaultValue={publicPostDTO?.coverImageUrl || ''}
+          defaultValue={formState.coverImageUrl}
           type='text'
           readOnly
         />
@@ -75,7 +87,7 @@ export function ManagePostForm({ publicPostDTO }: ManagePostFormProps) {
           labelText='Publicado'
           name='published'
           type='checkbox'
-          defaultChecked={publicPostDTO?.published || false}
+          defaultChecked={formState.published}
         />
 
         <InputText
@@ -83,7 +95,7 @@ export function ManagePostForm({ publicPostDTO }: ManagePostFormProps) {
           name='author'
           placeholder='Autor do post'
           type='text'
-          defaultValue={publicPostDTO?.author || ''}
+          defaultValue={formState.author}
         />
 
         <Button variant='default' size='md'>

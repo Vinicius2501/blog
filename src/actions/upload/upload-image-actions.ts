@@ -41,8 +41,6 @@ export async function uploadImageAction(
     IMAGEUPLOADER_DIR_PATH,
   );
 
-  console.log(uniqueImageName);
-
   await mkdir(uploadFullPath, { recursive: true });
 
   const fileArrayBuffer = await file.arrayBuffer();

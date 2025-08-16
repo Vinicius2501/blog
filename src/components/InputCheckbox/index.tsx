@@ -25,6 +25,7 @@ export function InputCheckbox({
           'focus:ring-blue-500',
           props.className,
         )}
+        {...props}
       />
       {labelText && (
         <label className='text-sm' htmlFor={id}>
