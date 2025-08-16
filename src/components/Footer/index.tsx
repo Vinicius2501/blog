@@ -6,7 +6,7 @@ type FooterProps = {
 
 export function Footer({ children }: FooterProps) {
   return (
-    <footer className={clsx('text-xs/tight', 'text-center', 'pb-8')}>
+    <footer className={clsx('text-xs/tight', 'text-center', 'py-8')}>
       {children}
     </footer>
   );
