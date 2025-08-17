@@ -10,6 +10,7 @@ import { useActionState, useEffect, useState } from 'react';
 import { ImageUploader } from '../ImageUploader';
 import { makePublicEmptyPost, PublicPost } from '@/DTO/post/dto';
 import { createPostAction } from '@/actions/post/create-post-action';
+import { toast } from 'react-toastify';
 
 type ManagePostFormProps = {
   publicPostDTO?: PublicPost;
@@ -29,7 +30,12 @@ export function ManagePostForm({ publicPostDTO }: ManagePostFormProps) {
 
   const [markdownValue, setMarkdownValue] = useState(formState.content);
 
-  useEffect(() => {}, [state]);
+  useEffect(() => {
+    if (state.errors.length > 0) {
+      toast.dismiss();
+      state.errors.forEach(error => toast.error(error));
+    }
+  }, [state.errors]);
 
   return (
     <form action={setFormState}>
@@ -73,7 +79,6 @@ export function ManagePostForm({ publicPostDTO }: ManagePostFormProps) {
           placeholder='URL da imagem da capa'
           defaultValue={formState.coverImageUrl}
           type='text'
-          readOnly
         />
         <MarkdownEditor
           labeltext='Contéudo'
