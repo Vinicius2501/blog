@@ -1,10 +1,14 @@
 'use server';
 
+import { drizzelDb } from '@/db/drizzle';
+import { PostsTable } from '@/db/drizzle/schemas';
 import { makePublicEmptyPost, PublicPost } from '@/DTO/post/dto';
 import { PostCreateSchema } from '@/lib/post/validations';
 import { PostModel } from '@/models/post/post-models';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { makeslugbyTitle } from '@/utils/make-slug-by-title';
+import { revalidateTag } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { v4 as uuidV4 } from 'uuid';
 
 type CreatePostActionProps = {
@@ -44,8 +48,9 @@ export async function createPostAction(
     updatedAt: new Date().toISOString(),
   };
 
-  return {
-    formState: newPost,
-    errors: [],
-  };
+  await drizzelDb.insert(PostsTable).values(newPost);
+
+  revalidateTag('posts');
+
+  redirect(`/admin/post/${newPost.id}`);
 }
