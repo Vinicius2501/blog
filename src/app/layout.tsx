@@ -4,6 +4,7 @@ import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import Link from 'next/link';
+import { ToastifyContainer } from '@/components/ToastifyContainer';
 
 export const metadata: Metadata = {
   title: {
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang='pt-BR' className='dark'>
       <body>
+        <ToastifyContainer />
         <Container>
           <Header>Entre Commits e Café</Header>
 

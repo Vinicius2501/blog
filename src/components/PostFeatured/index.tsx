@@ -2,9 +2,21 @@ import clsx from 'clsx';
 import { PostHeading } from '../PostHeading';
 import { PostCoverImage } from '../PostCoverImage';
 import { findAllPublicPostsCached } from '@/lib/post/queries/public';
+import { ErrorMessage } from '../ErrorMessage';
+import { relativeDate } from '@/utils/format-datetime';
 
 export async function PostFeatured() {
   const posts = await findAllPublicPostsCached();
+
+  if (posts.length <= 0)
+    return (
+      <ErrorMessage
+        pageTitle='Ops...'
+        contentTitle='Ops!'
+        content='Ainda não finalizamos o café então não temos nenhum post.'
+      />
+    );
+
   const mainPost = posts[0];
 
   const postUrl = `/post/${mainPost.slug}`;
@@ -36,7 +48,7 @@ export async function PostFeatured() {
           dateTime='2025-08-03'
         >
           {' '}
-          03/08/2025 22:53
+          {relativeDate(mainPost.createdAt)}
         </time>
         <PostHeading url={postUrl} as='h1'>
           {mainPost.title}

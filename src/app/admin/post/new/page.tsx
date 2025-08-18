@@ -1,11 +1,17 @@
-import clsx from 'clsx';
+import { ManagePostForm } from '@/components/admin/ManagePostForm';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
+export const metadata: Metadata = {
+  title: 'Criar post',
+};
+
 export default async function AdminPostNewPage() {
   return (
-    <>
-      <div className={clsx('py-16', 'text-6xl')}>AdminPostNewPagediv</div>
-    </>
+    <div className='flex flex-col gap-4'>
+      <h1 className='text-xl font-extrabold'>Criar post</h1>
+      <ManagePostForm />
+    </div>
   );
 }
