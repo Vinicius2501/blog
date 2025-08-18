@@ -1,10 +1,8 @@
 'use server';
-
-import { drizzelDb } from '@/db/drizzle';
-import { PostsTable } from '@/db/drizzle/schemas';
 import { makePublicEmptyPost, PublicPost } from '@/DTO/post/dto';
 import { PostCreateSchema } from '@/lib/post/validations';
 import { PostModel } from '@/models/post/post-models';
+import { postRepository } from '@/repositories/post';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { makeslugbyTitle } from '@/utils/make-slug-by-title';
 import { revalidateTag } from 'next/cache';
@@ -48,7 +46,20 @@ export async function createPostAction(
     updatedAt: new Date().toISOString(),
   };
 
-  await drizzelDb.insert(PostsTable).values(newPost);
+  try {
+    await postRepository.createPost(newPost);
+  } catch (e: unknown) {
+    if (e instanceof Error)
+      return {
+        formState: newPost,
+        errors: [e.message],
+      };
+
+    return {
+      formState: newPost,
+      errors: ['Não foi possível criar o seu post.'],
+    };
+  }
 
   revalidateTag('posts');
 

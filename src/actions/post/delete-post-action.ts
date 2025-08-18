@@ -1,33 +1,30 @@
 'use server';
-
-import { drizzelDb } from '@/db/drizzle';
-import { PostsTable } from '@/db/drizzle/schemas';
 import { postRepository } from '@/repositories/post';
-import { logColor } from '@/utils/log-color';
-import { eq } from 'drizzle-orm';
+
 import { revalidateTag } from 'next/cache';
 
 export async function deletePostAction(id: string) {
   //TODO: Chegar login
-  logColor('' + id);
 
   if (!id || typeof id !== 'string') {
     return {
       error: 'Dados inválidos!',
     };
   }
+  let post;
+  try {
+    post = await postRepository.deletePost(id);
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return {
+        error: e.message,
+      };
+    }
 
-  const post = await postRepository.findById(id).catch(() => undefined);
-
-  if (!post) {
     return {
-      error: 'Post não existe na base de dados',
+      error: 'Não foi possível apagar o post.',
     };
   }
-
-  //TODO: mover metodo para repository
-
-  await drizzelDb.delete(PostsTable).where(eq(PostsTable.id, id));
 
   revalidateTag('posts');
   revalidateTag(`post-${post.slug}`);
