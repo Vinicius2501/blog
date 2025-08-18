@@ -84,6 +84,7 @@ export function ImageUploader() {
 
       {!!imageUrl && (
         <div className={clsx('flex', 'flex-col', 'justify-around', 'gap-4')}>
+          <p>URL:{imageUrl} </p>
           <img src={imageUrl} className='rounded-lg' />
         </div>
       )}

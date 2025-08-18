@@ -29,8 +29,6 @@ export async function deletePostAction(id: string) {
 
   await drizzelDb.delete(PostsTable).where(eq(PostsTable.id, id));
 
-  //TODO: revalidateTag ou revalidatePath
-
   revalidateTag('posts');
   revalidateTag(`post-${post.slug}`);
 

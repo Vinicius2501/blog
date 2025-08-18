@@ -105,7 +105,7 @@ export function ManagePostForm({ publicPostDTO }: ManagePostFormProps) {
 
         <Button variant='default' size='md'>
           <CircleCheckIcon />
-          enviar
+          Enviar
         </Button>
       </div>
     </form>
