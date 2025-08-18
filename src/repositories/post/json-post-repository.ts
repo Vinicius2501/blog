@@ -13,6 +13,18 @@ const JSON_POSTS_FILE_PATH = resolve(
 );
 
 export class JsonPostRepository implements PostRepository {
+  createPost(post: PostModel): Promise<PostModel> {
+    throw new Error('Method not implemented.');
+  }
+  updatePost(
+    id: string,
+    newPostData: Omit<PostModel, 'id' | 'slug' | 'createdAt' | 'updatedAt'>,
+  ): Promise<PostModel> {
+    throw new Error('Method not implemented.');
+  }
+  deletePost(id: string): Promise<PostModel> {
+    throw new Error('Method not implemented.');
+  }
   private async simulateWait() {
     if (SIMULATE_WAIT_IN_MS <= 0) return;
 
