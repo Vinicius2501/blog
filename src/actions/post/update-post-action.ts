@@ -1,27 +1,30 @@
 'use server';
-import { makePublicEmptyPost, PublicPost } from '@/DTO/post/dto';
+import { makePublicPostFromDb, PublicPost } from '@/DTO/post/dto';
 import { PostCreateSchema } from '@/lib/post/validations';
-import { PostModel } from '@/models/post/post-models';
 import { postRepository } from '@/repositories/post';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
-import { makeslugbyTitle } from '@/utils/make-slug-by-title';
 import { revalidateTag } from 'next/cache';
-import { redirect } from 'next/navigation';
-import { v4 as uuidV4 } from 'uuid';
 
-type CreatePostActionProps = {
+type UpdatePostActionProps = {
   formState: PublicPost;
   errors: string[];
   success?: true;
 };
 
-export async function createPostAction(
-  prevState: CreatePostActionProps,
+export async function updatePostAction(
+  prevState: UpdatePostActionProps,
   formData: FormData,
-): Promise<CreatePostActionProps> {
-  //TODO: Verificar usuário logado
-
+): Promise<UpdatePostActionProps> {
   if (!(formData instanceof FormData)) {
+    return {
+      formState: prevState.formState,
+      errors: ['Dados inválidos!'],
+    };
+  }
+
+  const id = formData.get('id')?.toString() || '';
+
+  if (!id || typeof id !== 'string') {
     return {
       formState: prevState.formState,
       errors: ['Dados inválidos!'],
@@ -34,35 +37,38 @@ export async function createPostAction(
   if (!zodParsedObj.success) {
     const errors = getZodErrorMessages(zodParsedObj.error);
     return {
+      formState: prevState.formState,
       errors,
-      formState: makePublicEmptyPost(formDataToObj),
     };
   }
+
   const validPostData = zodParsedObj.data;
-  const newPost: PostModel = {
+  const newPost = {
     ...validPostData,
-    id: uuidV4(),
-    slug: makeslugbyTitle(validPostData.title),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
   };
 
+  let post;
   try {
-    await postRepository.createPost(newPost);
+    post = await postRepository.updatePost(id, newPost);
   } catch (e: unknown) {
-    if (e instanceof Error)
+    if (e instanceof Error) {
       return {
-        formState: newPost,
+        formState: prevState.formState,
         errors: [e.message],
       };
-
+    }
     return {
-      formState: newPost,
-      errors: ['Não foi possível criar o seu post.'],
+      formState: prevState.formState,
+      errors: ['Dados inválidos!'],
     };
   }
 
   revalidateTag('posts');
+  revalidateTag(`post-${post.slug}`);
 
-  redirect(`/admin/post/${newPost.id}`);
+  return {
+    formState: makePublicPostFromDb(post),
+    errors: [],
+    success: true,
+  };
 }
