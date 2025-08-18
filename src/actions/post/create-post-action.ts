@@ -64,5 +64,5 @@ export async function createPostAction(
 
   revalidateTag('posts');
 
-  redirect(`/admin/post/${newPost.id}`);
+  redirect(`/admin/post/${newPost.id}?created=1`);
 }
